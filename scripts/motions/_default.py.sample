@@ -1,0 +1,56 @@
+#!/usr/bin/python
+from core_tool import *
+def Help():
+  return '''Default script that is executed at starting the cui_tool.
+  Usage: (AUTOMATICALLY EXECUTED)'''
+def Run(t,*args):
+  print 'Loading _default for %s...'%ROS_ROBOT
+
+  t.ExecuteMotion('attr', 'loadmem')
+  t.ExecuteMotion('db', 'load')
+
+  if ROS_ROBOT in ('PR2','Baxter'):
+    t.SetAttr('environment', 'real')
+
+    t.x_sensor= []
+    if t.robot.Is('PR2'):
+      #For marker on left gripper:
+      #t.l_x_m_wrist= [0.087021175777742904, 0.0011969792480583405, 0.028605313958319258, -0.03731856097052566, 0.06961908806378489, -0.013908747660518068, 0.99677833760709922]
+      #For marker on sensor mount of left gripper:
+      t.l_x_m_wrist= [0.114021175777742904, 0.0011969792480583405, 0.028605313958319258, -0.03731856097052566, 0.06961908806378489, -0.013908747660518068, 0.99677833760709922]
+      #t.l_x_m_wrist[3:]= QFromAxisAngle([0.,1.,0.],DegToRad(20.))
+      t.l_x_m_wrist[3:]= QFromAxisAngle([0.,1.,0.],DegToRad(15.))
+    elif t.robot.Is('Baxter'):
+      t.l_x_m_wrist= [0.114021175777742904, 0.0011969792480583405, 0.028605313958319258, -0.03731856097052566, 0.06961908806378489, -0.013908747660518068, 0.99677833760709922]
+      t.l_x_m_wrist[0]-= 0.08
+      t.l_x_m_wrist[2]+= 0.02
+      t.l_x_m_wrist[3:]= QFromAxisAngle([0.,1.,0.],DegToRad(15.))
+      t.l_x_m_wrist= Transform(QFromAxisAngle([0.,1.,0.],-math.pi/2.0), t.l_x_m_wrist)
+    print 't.l_x_m_wrist=',t.l_x_m_wrist
+    print 'Executing calib_x...'
+    t.ExecuteMotion('calib_x')
+
+  else:
+    t.SetAttr('environment', 'sim')
+
+    t.x_sensor= [0.9944805796516315, 0.22417440359989238, 0.13288497651123526, 0.50448980329812887, 0.74965096993713265, -0.34422975057311417, -0.25498890262304241]
+    if t.robot.Is('PR2'):
+      #For marker on left gripper:
+      #t.l_x_m_wrist= [0.087021175777742904, 0.0011969792480583405, 0.028605313958319258, -0.03731856097052566, 0.06961908806378489, -0.013908747660518068, 0.99677833760709922]
+      #For marker on sensor mount of left gripper:
+      t.l_x_m_wrist= [0.114021175777742904, 0.0011969792480583405, 0.028605313958319258, -0.03731856097052566, 0.06961908806378489, -0.013908747660518068, 0.99677833760709922]
+      #t.l_x_m_wrist[3:]= QFromAxisAngle([0.,1.,0.],DegToRad(20.))
+      t.l_x_m_wrist[3:]= QFromAxisAngle([0.,1.,0.],DegToRad(15.))
+    elif t.robot.Is('Baxter'):
+      t.l_x_m_wrist= [0.114021175777742904, 0.0011969792480583405, 0.028605313958319258, -0.03731856097052566, 0.06961908806378489, -0.013908747660518068, 0.99677833760709922]
+      t.l_x_m_wrist[0]-= 0.08
+      t.l_x_m_wrist[2]+= 0.02
+      t.l_x_m_wrist[3:]= QFromAxisAngle([0.,1.,0.],DegToRad(15.))
+      t.l_x_m_wrist= Transform(QFromAxisAngle([0.,1.,0.],-math.pi/2.0), t.l_x_m_wrist)
+    else:
+      t.l_x_m_wrist= [0.114021175777742904, 0.0011969792480583405, 0.028605313958319258, -0.03731856097052566, 0.06961908806378489, -0.013908747660518068, 0.99677833760709922]
+    print 't.l_x_m_wrist=',t.l_x_m_wrist
+    #print 'Executing calib_x...'
+    #t.ExecuteMotion('calib_x')
+
+

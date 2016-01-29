@@ -1,0 +1,9 @@
+moveit_msgs/RobotState  start_state
+moveit_msgs/RobotTrajectory  trajectory
+moveit_msgs/Constraints  path_constraints
+#string group
+
+---
+
+bool valid
+uint32[] invalid_index

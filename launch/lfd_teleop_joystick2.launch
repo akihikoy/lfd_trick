@@ -1,0 +1,26 @@
+<!-- for radioshack controller -->
+<launch>
+
+  <node type="teleop_gripper" pkg="pr2_teleop" name="teleop_gripper_right" output="screen">
+    <param name="open_button" type="int" value="1" />
+    <param name="close_button" type="int" value="3" />
+	<param name="open_position" type="double" value="0.08" />
+	<param name="close_position" type="double" value="0.0" />
+    <remap from="command" to="r_gripper_controller/command" />
+  </node>
+
+  <node type="teleop_gripper" pkg="pr2_teleop" name="teleop_gripper_left" output="screen">
+    <param name="open_button" type="int" value="8" />
+    <param name="close_button" type="int" value="9" />
+	<param name="open_position" type="double" value="0.08" />
+	<param name="close_position" type="double" value="0.0" />
+    <remap from="command" to="l_gripper_controller/command" />
+  </node>
+
+  <node pkg="pr2_teleop" type="teleop_pr2" name="pr2_teleop" output="screen">
+    <remap from="cmd_vel" to="base_controller/command" />
+    <rosparam file="$(find lfd_trick)/config/teleop.yaml" command="load" />
+  </node>
+
+</launch>
+

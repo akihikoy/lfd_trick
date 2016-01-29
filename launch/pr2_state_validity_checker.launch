@@ -1,0 +1,11 @@
+<launch>
+  <!--<include file="$(find pr2_description)/robots/upload_pr2.launch" />-->
+  <include file="$(find lfd_vision)/urdf/upload_pr2_m100.launch" />
+
+  <include file="$(find lfd_vision)/urdf/pr2_moveit_planning_context.launch"/>
+
+  <node name="state_validity_checker" pkg="lfd_trick" type="state_validity_checker_node" respawn="false" output="screen">
+    <rosparam command="load" file="$(find lfd_vision)/urdf/pr2_moveit_kinematics.yaml"/>
+  </node>
+</launch>
+

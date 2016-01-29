@@ -1,0 +1,40 @@
+help: Human readable explanation about the object.
+#Reference AR marker ID and pose:
+ref_marker_id: -1
+ref_marker_pose: [0.0, 0.0, 0.0,  0.0, 0.0, 0.0, 1.0]
+#Set of grab primitives (DEPRECATED):
+grab_primitives:
+- kind: pkCylinder
+  p1: [0.0, 0.0, 0.0]
+  p2: [0.0, 0.0, 0.2]
+  width: 0.1
+- kind: pkCube
+  x_center: [0.0, 0.0, 0.1,  0.0, 0.0, 0.0, 1.0]
+  dims: [0.1, 0.1, 0.2]
+#Set of shape primitives:
+shape_primitives:
+- kind: rtpkCylinder
+  param: [0.1, 0.2]  #[radius,height]
+  pose: [0.0,0.0,0.0, 0.0,0.0,0.0,1.0]
+- kind: rtpkHalfCylinder
+  param: [0.1, 0.2]  #[radius,height], only y>=0 part
+  pose: [0.0,0.0,0.0, 0.0,0.0,0.0,1.0]
+- kind: rtpkTube
+  param: [0.033, 0.010, 0.01, 0.0, -0.01]  #[radius_out,radius_in,height,dx,dy], dx,dy: displacement of hole position
+  pose: [0.0,0.0,0.0, 0.0,0.0,0.0,1.0]
+- kind: rtpkHalfTube
+  param: [0.033, 0.010, 0.01, 0.0, -0.01]  #[radius_out,radius_in,height,dx,dy], dx,dy: displacement of hole position, only y>=0 part
+  pose: [0.0,0.0,0.0, 0.0,0.0,0.0,1.0]
+- kind: rtpkCuboid
+  param: [0.1, 0.1, 0.2]  #[half_len_x,half_len_y,half_len_z]
+  pose: [0.0,0.0,0.0, 0.0,0.0,0.0,1.0]
+- kind: rtpkRectTube
+  param: [0.03, 0.03, 0.1, 0.027, 0.027, 0.0,0.0]  #[half_len_x_out,half_len_y_out,half_len_z, half_len_x_in,half_len_y_in,dx,dy], dx,dy: displacement of hole position
+  pose: [0.0,0.0,0.05, 0.0,0.0,0.0,1.0]
+#Pouring edge point candidates:
+l_p_pour_e_set:
+- [0.05, 0.05, 0.2]
+- [-0.05, 0.05, 0.2]
+- [-0.05, -0.05, 0.2]
+- [0.05, -0.05, 0.2]
+- [0.05, 0.05, 0.2]

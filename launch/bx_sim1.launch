@@ -1,0 +1,5 @@
+<launch>
+
+  <include file="$(find lfd_trick)/launch/bx_sim_world.launch"/>
+
+</launch>

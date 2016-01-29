@@ -1,0 +1,26 @@
+<launch>
+
+  <node pkg="baxter_examples" type="xdisplay_image.py" name="xdisplay_image"
+        args="-f $(find lfd_trick)/config/baymax.jpg" />
+
+  <node pkg="baxter_interface" type="joint_trajectory_action_server.py"
+        name="joint_trajectory_action_server"
+        args="-r 500.0" />
+
+  <node pkg="lfd_trick" type="robotiq_tcp_ctrl.py"
+        name="rq1" >
+    <param name="address" type="string" value="rq1" />
+    <param name="freq" type="double" value="400.0" />
+  </node>
+
+  <include file="$(find lfd_trick)/launch/bx_state_validity_checker.launch"/>
+
+  <!--Virtual Robotiq gripper (only mass)-->
+  <node name="bx_set_gripw" pkg="lfd_trick" type="bx_set_gripw.py" >
+    <param name="arm" type="string" value="left" />
+    <param name="mass" type="double" value="0.987" />
+    <!--<param name="mass" type="double" value="3.0" />-->  <!--TEST (heavier mass than actual)-->
+    <param name="gid" type="int" value="131073" />
+  </node>
+
+</launch>

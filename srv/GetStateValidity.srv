@@ -1,0 +1,15 @@
+# Original: moveit_msgs/GetStateValidity
+
+moveit_msgs/RobotState robot_state
+string group_name
+moveit_msgs/Constraints constraints
+
+# Specify a frame_id of contacts in the response:
+string contacts_frame_id
+
+---
+
+bool valid
+moveit_msgs/ContactInformation[] contacts
+moveit_msgs/CostSource[] cost_sources
+moveit_msgs/ConstraintEvalResult[] constraint_result

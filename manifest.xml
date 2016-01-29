@@ -1,0 +1,24 @@
+<package>
+  <description brief="lfd_trick">
+
+     lfd_trick
+
+  </description>
+  <author>Akihiko Y</author>
+  <license>???</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/lfd_trick</url>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+  <depend package="tf"/>
+  <depend package="std_msgs"/>
+  <depend package="std_srvs"/>
+  <depend package="moveit_core"/>
+  <depend package="moveit_ros_planning_interface"/>
+  <depend package="moveit_msgs"/>
+  <depend package="lfd_vision"/>
+  <depend package="lfd_sim"/>
+
+</package>
+
+

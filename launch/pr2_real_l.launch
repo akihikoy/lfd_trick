@@ -1,0 +1,35 @@
+<launch>
+
+
+  <!--<include file="$(find pr2_lfd_utils)/launch/switch_joy_real.launch"/>-->
+
+  <!--TEST-->
+  <!--<include file="$(find pr2_description)/robots/upload_pr2.launch" />-->
+  <include file="$(find lfd_vision)/urdf/upload_pr2_m100.launch" />
+  <!--Broadcast the tf for the gripper sensor mount
+      NOTE: should be compatible with lfd_vision/urdf/upload_pr2_m100.launch-->
+  <node pkg="tf" type="static_transform_publisher"
+        name="l_gripper_sensor_mount_link_broadcaster"
+        args="0.053 0 0.02425 0 0 0 l_wrist_roll_link l_gripper_sensor_mount_link 100" />
+
+  <include file="$(find lfd_trick)/launch/pr2_arm_navigation.launch"/>
+
+  <include file="$(find lfd_trick)/launch/lfd_teleop_joystick.launch"/>
+<!--   <include file="$(find pr2_lfd_utils)/launch/manip.launch"/> -->
+<!--   <include file="$(find dmp)/launch/dmp.launch"/> -->
+<!--   <include file="$(find ar_track_alvar)/launch/pr2_indiv.launch"/> -->
+<!--   <include file="$(find pr2_gripper_traj_action)/launch/pr2_gripper_traj_action.launch"/> -->
+  <include file="$(find lfd_trick)/launch/pr2_mannequin_controllers.launch"/>
+<!--   <include file="/etc/ros/openni_head.launch"/> -->
+
+<!--   <include file="$(find pr2_arm_navigation_kinematics)/launch/pr2_ik_larm_node.launch"/> -->
+<!--   <include file="$(find pr2_arm_navigation_kinematics)/launch/pr2_ik_rarm_node.launch"/> -->
+
+  <!--<include file="$(find pr2_lfd_utils)/launch/lfd_teleop_joystick2.launch"/>
+  <node type="teleopCart.py" pkg="pr2_lfd_utils" name="teleop_cart_node" output="screen">
+    <param name="joy_kind" value="PS3" />
+  </node> -->
+
+<!--   <include file="$(find lfd_trick)/launch/pr2_state_validity_checker.launch"/> -->
+
+</launch>

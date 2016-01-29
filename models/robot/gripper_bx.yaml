@@ -1,0 +1,47 @@
+#Grippers of Baxter
+#FIXME: Change names: wrist_* --> grip_*
+
+#Left gripper (Robotiq gripper)
+wrist_l:
+  #Kinematics information:
+  kinematics_chain:
+    #Right or left arm:
+    parent_arm: l
+  #Gripper pose (Q=QFromAxisAngle([0.,1.,0.],-math.pi/2.0))
+  lx: [0.0,0.0,0.115, 0.0,-0.70710678,0.0,0.70710678]
+  #Bounding box is attached to the local frame of 'lx'.
+  bound_box:
+    #mid= viz.AddCube(xe-((0.06*ex).tolist()+[0.0]*4), [0.12,0.08,0.02], rgb=viz.ICol(3), alpha=0.5, mid=mid)
+    dim: [0.12,0.08,0.02]
+    center: [-0.06,0.0,0.0, 0.0,0.0,0.0,1.0]
+
+#Right gripper (Electric parallel gripper)
+wrist_r:
+  #Kinematics information:
+  kinematics_chain:
+    #Right or left arm:
+    parent_arm: r
+  #Gripper pose (Q=QFromAxisAngle([0.,1.,0.],-math.pi/2.0))
+  lx: [0.0,0.0,0.09, 0.0,-0.70710678,0.0,0.70710678]
+  #Bounding box is attached to the local frame of 'lx'.
+  bound_box:
+    #mid= viz.AddCube(xe-((0.06*ex).tolist()+[0.0]*4), [0.12,0.08,0.02], rgb=viz.ICol(3), alpha=0.5, mid=mid)
+    dim: [0.12,0.08,0.02]
+    center: [-0.06,0.0,0.0, 0.0,0.0,0.0,1.0]
+
+#Sentis M100 sensor on left gripper
+wl_m100:
+  #Kinematics information:
+  kinematics_chain:
+    #Right or left arm:
+    parent_arm: l
+  #Local vector of the left gripper, calculated by
+  ## [-0.08315, 0.00, 0.0]+MultiplyQ(QFromAxisAngle([0.,1.,0.],-math.pi/2.0),MultiplyQ(QFromAxisAngle([0,1,0],DegToRad(88.)),QFromAxisAngle([0,0,1],DegToRad(90.)))).tolist()
+  #lx: [-0.08315, 0.0, 0.0, -0.012340714939826858, -0.012340714939826913, 0.7069990853988242, 0.7069990853988243]
+  # [-0.08315, 0.00, 0.0]+MultiplyQ(QFromAxisAngle([0.,1.,0.],-math.pi/2.0),MultiplyQ(QFromAxisAngle([0,1,0],DegToRad(86.)),QFromAxisAngle([0,0,1],DegToRad(90.)))).tolist()
+  lx: [-0.08315, 0.0, 0.0, -0.024677670778335936, -0.024677670778335936, 0.7066760308408344, 0.7066760308408345]
+  #Bounding box is attached to the local frame of 'lx'.
+  bound_box:
+    #mid= viz.AddMarker(x_sensor, scale=[0.06,0.06,0.012], alpha=0.8, mid=mid)
+    dim: [0.06,0.06,0.012]
+    center: [0.0,0.0,0.0, 0.0,0.0,0.0,1.0]

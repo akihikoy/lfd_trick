@@ -1,0 +1,19 @@
+help: Simple bread (parts box).
+#Reference AR marker ID and pose:
+ref_marker_id: -1
+ref_marker_pose: [0.0, 0.0, 0.0,  0.0, 0.0, 0.0, 1.0]
+#Set of grab primitives:
+grab_primitives:
+- kind: pkCube
+  x_center: [0.0, 0.0, 0.005,  0.0, 0.0, 0.0, 1.0]
+  dims: [0.094, 0.2, 0.01]
+#Pouring edge point candidates:
+l_p_pour_e_set:
+- [0.047, 0.00, 0.01]
+- [0.047, 0.10, 0.01]
+- [0.0, 0.11, 0.01]
+- [-0.047, 0.10, 0.01]
+- [-0.047, 0.0, 0.01]
+- [-0.047,-0.10, 0.01]
+- [0.0,-0.11, 0.01]
+- [0.047,-0.10, 0.01]

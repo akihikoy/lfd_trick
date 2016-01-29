@@ -1,0 +1,8 @@
+#!/usr/bin/python
+from core_tool import *
+def Help():
+  return '''Default script that is executed at exiting the cui_tool.
+  Usage: (AUTOMATICALLY EXECUTED)'''
+def Run(t,*args):
+  t.ExecuteMotion('attr', 'savemem')
+  t.ExecuteMotion('db', 'save')

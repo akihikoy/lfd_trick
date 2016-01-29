@@ -1,0 +1,22 @@
+#!/usr/bin/python
+from core_tool import *
+def Help():
+  return '''Default script that is executed at starting the cui_tool.
+  Usage: (AUTOMATICALLY EXECUTED)'''
+def Run(t,*args):
+  print 'Loading _default...'
+
+  t.ExecuteMotion('attr', 'loadmem')
+  t.ExecuteMotion('db', 'load')
+
+  t.SetAttr('environment', 'real')
+
+  t.x_sensor= []
+  #For marker on left gripper:
+  #t.l_x_m_wrist= [0.087021175777742904, 0.0011969792480583405, 0.028605313958319258, -0.03731856097052566, 0.06961908806378489, -0.013908747660518068, 0.99677833760709922]
+  #For marker on sensor mount of left gripper:
+  t.l_x_m_wrist= [0.114021175777742904, 0.0011969792480583405, 0.028605313958319258, -0.03731856097052566, 0.06961908806378489, -0.013908747660518068, 0.99677833760709922]
+  t.l_x_m_wrist[3:]= QFromAxisAngle([0.,1.,0.],DegToRad(20.))
+  print 'Executing calib_x...'
+  t.ExecuteMotion('calib_x')
+

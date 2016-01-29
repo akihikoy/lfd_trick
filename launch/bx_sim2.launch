@@ -1,0 +1,17 @@
+<launch>
+  <!--NOTE: This launch file should be launched separatedly after bx_sim1.launch
+  since ROS cannot control launching order.-->
+
+  <node pkg="tf" type="static_transform_publisher"
+        name="world_base"
+        args="0 0 0  0 0 0 world base 100" />
+
+  <node pkg="baxter_interface" type="joint_trajectory_action_server.py"
+        name="joint_trajectory_action_server" />
+
+  <include file="$(find lfd_trick)/launch/bx_state_validity_checker.launch"/>
+
+  <node pkg="baxter_tools" type="enable_robot.py" respawn="false" output="screen"
+        name="enable_robot" args="-e" />
+
+</launch>
