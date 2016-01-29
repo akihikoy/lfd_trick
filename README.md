@@ -76,10 +76,11 @@ It executed `scripts/motions/test/test.py` (`test.` specifies a sub directory).
 If a robot is ready (it also works with simulated robots), we can run robot control scripts.  For example,
 
 ```
+Baxter:trick or quit|L> keyctrl
 Baxter:trick or quit|L> test.throw1
 ```
 
-is a throwing a paper-plane program by Baxter.
+are a keyboard teleoperation program and a throwing a paper-plane program.  test.throw1 works on Baxter only.
 
 Use `-help` option to see a brief explanation of each script; e.g.
 
