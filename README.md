@@ -18,17 +18,28 @@ Author
 Akihiko Yamaguchi, http://akihikoy.net/
 
 
-Requirements
-==================
-- ROS core system, rospy, roscpp, std_msgs, std_srvs, geometry_msgs, tf, ...
-- Python: core, numpy
-
-
 Acknowledgment
 ==================
 TPR2Mannequin class (mannequin controller for PR2) in src/base/ros_rbt_pr2.py is based on a code implemented by Scott Niekum, originally it was stored in pr2_lfd_utils/src/recordInteraction.py.
 
 CMA-ES (src/cma.py) is implemented by Nikolaus Hansen.  Read src/CMA1.0.09-README.txt for more information.
+
+
+Requirements
+==================
+Install following packages before building lfd_trick.
+
+Binaries are available (you can use **apt-get**):
+- ROS core system, rospy, roscpp, std_msgs, std_srvs, geometry_msgs, tf, ...
+- Python: core, numpy
+
+Need to build from source (NOTE: read **Requirements** and **Build** of each package):
+- lfd_vision: https://github.com/akihikoy/lfd_vision
+- lfd_sim: https://github.com/akihikoy/lfd_sim
+
+Working with Baxter/PR2 (OPTIONAL):
+- Need some packages for Baxter/PR2
+- Information would be found in: http://akihikoy.net/notes/?text
 
 
 Build
