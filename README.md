@@ -33,6 +33,7 @@ Binaries are available (you can use **apt-get**):
 - ROS core system, rospy, roscpp, std_msgs, std_srvs, geometry_msgs, tf, ...
 - Python: core, numpy
 - ros-ROS_DISTR-moveit-full  (ROS_DISTR: groovy, hydro, indigo, etc.)
+- ros-ROS_DISTR-moveit-resources
 
 Need to build from source (NOTE: read **Requirements** and **Build** of each package):
 - lfd_vision: https://github.com/akihikoy/lfd_vision
