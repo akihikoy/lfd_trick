@@ -8,7 +8,7 @@ __BASE_NONROS__= [
   'base_const',
   'base_exp',
   'base_ml',
-  'base_ml_dnn',
+  #'base_ml_dnn',
   #'base_ml_lwr',  #DEPRECATED
   'base_ml_lwr2',
   'base_opt',
@@ -57,7 +57,7 @@ else:
 from base_const import *
 from base_exp import *
 from base_ml import *
-from base_ml_dnn import *
+#from base_ml_dnn import *
 #from base_ml_lwr import *
 from base_ml_lwr2 import *
 from base_opt import *
