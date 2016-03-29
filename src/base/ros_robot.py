@@ -119,6 +119,17 @@ class TDualArmRobot(TROSUtil):
   def FK(self, q=None, x_ext=None, arm=None, with_st=False):
     pass
 
+  '''Compute a Jacobian matrix of an arm.
+  Return J of self.EndLink(arm).
+    return: J, res;  J: Jacobian (None if failure), res: status.
+    arm: LEFT, RIGHT, or None (==currarm).
+    q: list of joint angles, or None (==self.Q(arm)).
+    x_ext: a local pose (i.e. offset) on self.EndLink(arm) frame.
+      If not None, we do not consider an offset.
+    with_st: whether return the solver status. '''
+  def J(self, q=None, x_ext=None, arm=None, with_st=False):
+    pass
+
   '''Compute an inverse kinematics of an arm.
   Return joint angles for a target self.EndLink(arm) pose on self.BaseFrame.
     return: q, res;  q: joint angles (None if failure), res: IK status.
@@ -147,13 +158,13 @@ class TDualArmRobot(TROSUtil):
     x_ext: a local pose on the self.EndLink(arm) frame.
       If not None, the final joint angles q satisfies self.FK(q,x_ext,arm)==x_trg. '''
   def FollowXTraj(self, x_traj, t_traj, x_ext=None, arm=None, blocking=False):
-    if arm==None:  arm= self.Arm
+    if arm is None:  arm= self.Arm
 
     q_curr= self.Q(arm)
     q_traj= XTrajToQTraj(lambda x,q_start: self.IK(x, x_ext=x_ext, start_angles=q_start, arm=arm),
                          x_traj, start_angles=q_curr)
-    if q_traj==None:
-      raise Exception('FollowXTraj: IK failed')
+    if q_traj is None:
+      raise ROSException('ik','FollowXTraj: IK failed')
 
     self.FollowQTraj(q_traj, t_traj, arm=arm, blocking=blocking)
 
@@ -184,7 +195,7 @@ class TDualArmRobot(TROSUtil):
     x_ext: a local pose on the self.EndLink(arm) frame.
       If not None, the final joint angles q satisfies self.FK(q,x_ext,arm)==x_trg. '''
   def MoveToXI(self, x_trg, dt=4.0, x_ext=None, inum=30, arm=None, blocking=False):
-    if arm==None:  arm= self.Arm
+    if arm is None:  arm= self.Arm
 
     x_curr= self.FK(q=None, x_ext=x_ext, arm=arm)
     x_traj= XInterpolation(x_curr,x_trg,inum)

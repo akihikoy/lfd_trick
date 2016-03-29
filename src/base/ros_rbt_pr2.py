@@ -166,7 +166,7 @@ class TRobotPR2(TDualArmRobot):
   '''Return joint angles of an arm.
     arm: LEFT, RIGHT, or None (==currarm). '''
   def Q(self, arm=None):
-    if arm==None:  arm= self.Arm
+    if arm is None:  arm= self.Arm
     with self.sensor_locker:
       q= copy.deepcopy(self.curr_pos[arm])
     return q
@@ -180,8 +180,8 @@ class TRobotPR2(TDualArmRobot):
       If not None, the returned pose is x_ext on self.BaseFrame.
     with_st: whether return FK status. '''
   def FK(self, q=None, x_ext=None, arm=None, with_st=False):
-    if arm==None:  arm= self.Arm
-    if q==None:  q= self.Q(arm)
+    if arm is None:  arm= self.Arm
+    if q is None:  q= self.Q(arm)
 
     fk_req= kinematics_msgs.srv.GetPositionFKRequest()
     fk_req.header.frame_id= self.BaseFrame
@@ -197,10 +197,10 @@ class TRobotPR2(TDualArmRobot):
       CPrint(4,'FK failed:',str(e))
       CPrint(4,'Request:',fk_req)
       CPrint(4,'#FK failed:',str(e))
-      raise e  #Forward the exception
+      raise ROSException('fk',str(e))  #Forward the exception
 
     x= GPoseToX(res.pose_stamped[0].pose)
-    x_res= x if x_ext==None else Transform(x,x_ext)
+    x_res= x if x_ext is None else Transform(x,x_ext)
     if res.error_code.val==1:  return (x_res, res) if with_st else x_res
     else:  return (None, res) if with_st else None
 
@@ -214,11 +214,11 @@ class TRobotPR2(TDualArmRobot):
     start_angles: initial joint angles for IK solver, or None (==self.Q(arm)).
     with_st: whether return IK status. '''
   def IK(self, x_trg, x_ext=None, start_angles=None, arm=None, with_st=False):
-    if arm==None:  arm= self.Arm
-    if start_angles==None:  start_angles= self.Q(arm)
+    if arm is None:  arm= self.Arm
+    if start_angles is None:  start_angles= self.Q(arm)
 
     x_trg[3:]/= la.norm(x_trg[3:])  #Normalize the orientation:
-    xw_trg= x_trg if x_ext==None else TransformRightInv(x_trg,x_ext)
+    xw_trg= x_trg if x_ext is None else TransformRightInv(x_trg,x_ext)
 
     ik_req= kinematics_msgs.srv.GetPositionIKRequest()
     ik_req.ik_request.ik_seed_state.joint_state.name= self.JointNames(arm)
@@ -236,7 +236,7 @@ class TRobotPR2(TDualArmRobot):
       CPrint(4,'IK failed:',str(e))
       CPrint(4,'Request:',ik_req)
       CPrint(4,'#IK failed:',str(e))
-      raise e  #Forward the exception
+      raise ROSException('ik',str(e))  #Forward the exception
 
     q= res.solution.joint_state.position
     if res.error_code.val==1:  return (q, res) if with_st else q
@@ -250,7 +250,7 @@ class TRobotPR2(TDualArmRobot):
     blocking: False: move background, True: wait until motion ends, 'time': wait until tN. '''
   def FollowQTraj(self, q_traj, t_traj, arm=None, blocking=False):
     assert(len(q_traj)==len(t_traj))
-    if arm==None:  arm= self.Arm
+    if arm is None:  arm= self.Arm
 
     #copy q_traj, t_traj to goal
     goal= pr2_controllers_msgs.msg.JointTrajectoryGoal()
@@ -280,7 +280,7 @@ class TRobotPR2(TDualArmRobot):
     max_effort: maximum effort to control; 12~15 (weak), 50 (strong), -1 (maximum).
     blocking: False: move background, True: wait until motion ends, 'time': wait until tN.  '''
   def MoveGripper(self, pos, max_effort, arm=None, blocking=False):
-    if arm==None:  arm= self.Arm
+    if arm is None:  arm= self.Arm
 
     goal= pr2_controllers_msgs.msg.Pr2GripperCommandGoal()
     goal.command.position= pos

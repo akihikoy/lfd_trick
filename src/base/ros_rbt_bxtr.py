@@ -146,7 +146,7 @@ class TRobotBaxter(TDualArmRobot):
   '''Return joint angles of an arm.
     arm: LEFT, RIGHT, or None (==currarm). '''
   def Q(self, arm=None):
-    if arm==None:  arm= self.Arm
+    if arm is None:  arm= self.Arm
     with self.sensor_locker:
       angles= self.limbs[arm].joint_angles()
       q= [angles[joint] for joint in self.joint_names[arm]]  #Serialize
@@ -161,15 +161,38 @@ class TRobotBaxter(TDualArmRobot):
       If not None, the returned pose is x_ext on self.BaseFrame.
     with_st: whether return FK status. '''
   def FK(self, q=None, x_ext=None, arm=None, with_st=False):
-    if arm==None:  arm= self.Arm
-    if q==None:  q= self.Q(arm)
+    if arm is None:  arm= self.Arm
+    if q is None:  q= self.Q(arm)
 
     angles= {joint:q[j] for j,joint in enumerate(self.joint_names[arm])}  #Deserialize
     with self.sensor_locker:
       x= self.kin[arm].forward_position_kinematics(joint_values=angles)
 
-    x_res= x if x_ext==None else Transform(x,x_ext)
+    x_res= x if x_ext is None else Transform(x,x_ext)
     return (x_res, True) if with_st else x_res
+
+  '''Compute a Jacobian matrix of an arm.
+  Return J of self.EndLink(arm).
+    return: J, res;  J: Jacobian (None if failure), res: status.
+    arm: LEFT, RIGHT, or None (==currarm).
+    q: list of joint angles, or None (==self.Q(arm)).
+    x_ext: a local pose (i.e. offset) on self.EndLink(arm) frame.
+      If not None, we do not consider an offset.
+    with_st: whether return the solver status. '''
+  def J(self, q=None, x_ext=None, arm=None, with_st=False):
+    if arm is None:  arm= self.Arm
+    if q is None:  q= self.Q(arm)
+
+    if x_ext is not None:
+      #Since KDL does not provide Jacobian computation with an offset x_ext,
+      #and converting J with x_ext is not simple, we raise an Exception.
+      #TODO: Implement our own FK to solve this issue.
+      raise Exception('TRobotBaxter.J: Jacobian with x_ext is not implemented yet.')
+
+    angles= {joint:q[j] for j,joint in enumerate(self.joint_names[arm])}  #Deserialize
+    with self.sensor_locker:
+      J_res= self.kin[arm].jacobian(joint_values=angles)
+    return (J_res, True) if with_st else J_res
 
   '''Compute an inverse kinematics of an arm.
   Return joint angles for a target self.EndLink(arm) pose on self.BaseFrame.
@@ -181,14 +204,14 @@ class TRobotBaxter(TDualArmRobot):
     start_angles: initial joint angles for IK solver, or None (==self.Q(arm)).
     with_st: whether return IK status. '''
   def IK(self, x_trg, x_ext=None, start_angles=None, arm=None, with_st=False):
-    if arm==None:  arm= self.Arm
-    if start_angles==None:  start_angles= self.Q(arm)
+    if arm is None:  arm= self.Arm
+    if start_angles is None:  start_angles= self.Q(arm)
 
     x_trg[3:]/= la.norm(x_trg[3:])  #Normalize the orientation:
-    xw_trg= x_trg if x_ext==None else TransformRightInv(x_trg,x_ext)
+    xw_trg= x_trg if x_ext is None else TransformRightInv(x_trg,x_ext)
 
     with self.sensor_locker:
-      q= self.kin[arm].inverse_kinematics(xw_trg[:3], xw_trg[3:], seed=start_angles)
+      q= self.kin[arm].inverse_kinematics(xw_trg[:3], xw_trg[3:], seed=start_angles, maxiter=1000, eps=1.0e-6)
 
     if q is not None:  return (q, True) if with_st else q
     else:  return (None, False) if with_st else None
@@ -201,7 +224,7 @@ class TRobotBaxter(TDualArmRobot):
     blocking: False: move background, True: wait until motion ends, 'time': wait until tN. '''
   def FollowQTraj(self, q_traj, t_traj, arm=None, blocking=False):
     assert(len(q_traj)==len(t_traj))
-    if arm==None:  arm= self.Arm
+    if arm is None:  arm= self.Arm
 
     #Insert current position to beginning.
     if t_traj[0]>1.0e-2:
@@ -241,7 +264,7 @@ class TRobotBaxter(TDualArmRobot):
     blocking: False: move background, True: wait until motion ends.  '''
   def MoveGripper(self, pos, max_effort=50.0, speed=50.0, arm=None, blocking=False):
     if self.is_sim:  return  #WARNING:We do nothing if the robot is on simulator.
-    if arm==None:  arm= self.Arm
+    if arm is None:  arm= self.Arm
 
     gripper= self.grippers[arm]
     if isinstance(gripper, baxter_interface.Gripper):

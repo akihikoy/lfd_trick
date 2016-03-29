@@ -66,7 +66,7 @@ class TSimpleVisualizer:
     return marker
 
   def SetID(self, marker, mid):
-    if mid==None:
+    if mid is None:
       marker.id= self.curr_id
       self.curr_id+= 1
     else:
@@ -76,7 +76,7 @@ class TSimpleVisualizer:
     self.added_ids= self.added_ids.union([marker.id])
     return marker.id+1
 
-  #Visualize a marker at x.  If mid==None, the id is automatically assigned
+  #Visualize a marker at x.  If mid is None, the id is automatically assigned
   def AddMarker(self, x, scale=[0.02,0.02,0.004], rgb=[1,1,1], alpha=1.0, mid=None):
     marker= self.GenMarker(x, scale, rgb, alpha)
     mid2= self.SetID(marker,mid)
@@ -84,7 +84,7 @@ class TSimpleVisualizer:
     self.viz_pub.publish(marker)
     return mid2
 
-  #Visualize an arrow at x.  If mid==None, the id is automatically assigned
+  #Visualize an arrow at x.  If mid is None, the id is automatically assigned
   def AddArrow(self, x, scale=[0.05,0.002,0.002], rgb=[1,1,1], alpha=1.0, mid=None):
     marker= self.GenMarker(x, scale, rgb, alpha)
     mid2= self.SetID(marker,mid)
@@ -92,7 +92,7 @@ class TSimpleVisualizer:
     self.viz_pub.publish(marker)
     return mid2
 
-  #Visualize a cube at x.  If mid==None, the id is automatically assigned
+  #Visualize a cube at x.  If mid is None, the id is automatically assigned
   def AddCube(self, x, scale=[0.05,0.03,0.03], rgb=[1,1,1], alpha=1.0, mid=None):
     marker= self.GenMarker(x, scale, rgb, alpha)
     mid2= self.SetID(marker,mid)
@@ -100,7 +100,7 @@ class TSimpleVisualizer:
     self.viz_pub.publish(marker)
     return mid2
 
-  #Visualize a sphere at p=[x,y,z].  If mid==None, the id is automatically assigned
+  #Visualize a sphere at p=[x,y,z].  If mid is None, the id is automatically assigned
   def AddSphere(self, p, scale=[0.05,0.05,0.05], rgb=[1,1,1], alpha=1.0, mid=None):
     if len(p)==3:
       x= list(p)+[0,0,0,1]
@@ -112,7 +112,7 @@ class TSimpleVisualizer:
     self.viz_pub.publish(marker)
     return mid2
 
-  #Visualize a cylinder whose end points are p1 and p2.  If mid==None, the id is automatically assigned
+  #Visualize a cylinder whose end points are p1 and p2.  If mid is None, the id is automatically assigned
   def AddCylinder(self, p1, p2, diameter, rgb=[1,1,1], alpha=1.0, mid=None):
     x= XFromP1P2(p1, p2, ax='z', r=0.5)
     length= la.norm(Vec(p2)-Vec(p1))
@@ -124,7 +124,7 @@ class TSimpleVisualizer:
     self.viz_pub.publish(marker)
     return mid2
 
-  #Visualize a points [[x,y,z]*N].  If mid==None, the id is automatically assigned
+  #Visualize a points [[x,y,z]*N].  If mid is None, the id is automatically assigned
   def AddPoints(self, points, scale=[0.03,0.03], rgb=[1,1,1], alpha=1.0, mid=None):
     x= [0,0,0, 0,0,0,1]
     marker= self.GenMarker(x, list(scale)+[0.0], rgb, alpha)
@@ -139,7 +139,7 @@ class TSimpleVisualizer:
     self.viz_pub.publish(marker)
     return mid2
 
-  #Visualize a coordinate system at x.  If mid==None, the id is automatically assigned
+  #Visualize a coordinate system at x.  If mid is None, the id is automatically assigned
   def AddCoord(self, x, scale=[0.05,0.002], alpha=1.0, mid=None):
     scale= [scale[0],scale[1],scale[1]]
     p,R= XToPosRot(x)
@@ -150,7 +150,7 @@ class TSimpleVisualizer:
     mid= self.AddArrow(PosRotToX(p,Rz), scale=scale, rgb=self.ICol(2), alpha=alpha, mid=mid)
     return mid
 
-  #Visualize a polygon [[x,y,z]*N].  If mid==None, the id is automatically assigned
+  #Visualize a polygon [[x,y,z]*N].  If mid is None, the id is automatically assigned
   def AddPolygon(self, points, scale=[0.02], rgb=[1,1,1], alpha=1.0, mid=None):
     x= [0,0,0, 0,0,0,1]
     marker= self.GenMarker(x, list(scale)+[0.0,0.0], rgb, alpha)
